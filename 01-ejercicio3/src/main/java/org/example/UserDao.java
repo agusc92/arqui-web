@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * @brief define la interfaz de coneccion de usuario
+ */
 public class UserDao implements Dao<User>{
     private final String uri;
 
