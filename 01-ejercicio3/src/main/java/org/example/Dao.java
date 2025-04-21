@@ -5,6 +5,8 @@ import java.util.Optional;
 
 /*! \brief
  * interfaz que define los metodos a implementar para satisfacer los requerimienros
+ *
+ *
  * @author Agustin La Battaglia
  * @version 1.0
  *
