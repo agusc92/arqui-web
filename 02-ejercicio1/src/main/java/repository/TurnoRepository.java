@@ -9,6 +9,7 @@ import modelo.Turno;
 
 import java.io.FileReader;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class TurnoRepository {
     public void insertarDesdeCSV(String rutaArchivo) {
@@ -25,7 +26,7 @@ public class TurnoRepository {
                 turno.setDateTime(LocalDate.parse(linea[1]));
 
 
-
+                turno.setPersonas(new ArrayList<Persona>());
 
 
                 em.persist(turno);
@@ -39,5 +40,9 @@ public class TurnoRepository {
         }
     }
 
+    public Turno find(int id){
+        EntityManager em = JPAUtil.getEntityManager();
+        return em.find(Turno.class,id);
+    }
 
 }

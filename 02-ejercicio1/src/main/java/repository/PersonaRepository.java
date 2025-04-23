@@ -11,6 +11,8 @@ import modelo.Socio;
 import modelo.Turno;
 
 import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PersonaRepository {
 
@@ -32,6 +34,8 @@ public class PersonaRepository {
                 // Busco la Direccion por ID
                 Domicilio direccion = em.find(Domicilio.class, Integer.parseInt(linea[3]));
                 persona.setDomicilio(direccion);
+
+                persona.setTurnos(new ArrayList<Turno>());
 
                 em.persist(persona);
                 System.out.println(persona.getId());
@@ -102,5 +106,44 @@ public class PersonaRepository {
     public Persona find(int id){
         EntityManager em = JPAUtil.getEntityManager();
         return em.find(Persona.class,id);
+    }
+    public void asignarTurno(Turno tur,Persona per){
+        EntityManager em = JPAUtil.getEntityManager();
+        em.getTransaction().begin();
+        Persona p3 = em.find(Persona.class,per.getId());
+        Turno t1 = em.find(Turno.class,tur.getId());
+
+        if(p3 != null && t1 != null){
+            p3.getTurnos().add(t1);
+            t1.getPersonas().add(p3);
+
+            em.merge(p3);
+            em.merge(t1);
+        }
+
+        em.getTransaction().commit();
+    }
+
+    public ArrayList<PersonaDTO> obtenerPersonasPorTurno(int idTurno) {
+        EntityManager em = JPAUtil.getEntityManager();
+        List<Persona> personas = em.createQuery(
+                        "SELECT p FROM Persona p JOIN p.turnos t WHERE t.id = :idTurno", Persona.class)
+                .setParameter("idTurno", idTurno)
+                .getResultList();
+        em.close();
+
+        ArrayList<PersonaDTO> personaDTO = new ArrayList<>();
+        for(Persona p : personas){
+            personaDTO.add(generarDTO(p));
+        }
+        return personaDTO;
+    }
+
+    private PersonaDTO generarDTO(Persona p){
+        String ciudad = (p.getDomicilio() != null) ? p.getDomicilio().getCiudad() : "Sin ciudad";
+        String calle = (p.getDomicilio() != null) ? p.getDomicilio().getCalle() : "Sin calle";
+        String tipoSocio = (p.getSocio() != null) ? p.getSocio().getTipo() : "No socio";
+
+        return new PersonaDTO(p.getNombre(), p.getAnios(), ciudad, calle, tipoSocio);
     }
 }

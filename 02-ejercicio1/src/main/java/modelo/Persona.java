@@ -7,13 +7,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table (name = "persona")
 @Getter
 @Setter
-@NoArgsConstructor
+
 @AllArgsConstructor
 public class Persona {
     @Id
@@ -41,5 +42,7 @@ public class Persona {
     )
     private List<Turno> turnos;
 
-
+    public Persona(){
+        this.turnos = new ArrayList<Turno>();
+    }
 }

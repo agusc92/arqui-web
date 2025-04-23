@@ -20,7 +20,7 @@ public class Socio {
     @Column
     private String tipo;
 
-    @OneToOne
+    @OneToOne (cascade = CascadeType.ALL)
     @MapsId
     @JoinColumn(name = "id") // O "persona_id" si tu FK se llama así
     private Persona persona;

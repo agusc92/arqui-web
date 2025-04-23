@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -13,7 +14,7 @@ import java.util.List;
 @Table (name = "domicilio")
 @Getter
 @Setter
-@NoArgsConstructor
+
 @AllArgsConstructor
 public class Domicilio {
     @Id
@@ -31,6 +32,10 @@ public class Domicilio {
     @OneToMany (mappedBy = "domicilio")
     private List<Persona> personas;
 
+    public Domicilio(){
+        super();
+        this.personas = new ArrayList<Persona>();
+    }
 
 
 

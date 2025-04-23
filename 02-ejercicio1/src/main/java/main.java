@@ -1,7 +1,9 @@
 import Factory.JPAUtil;
+import dto.PersonaDTO;
 import jakarta.persistence.EntityManager;
 import modelo.Domicilio;
 import modelo.Persona;
+import modelo.Turno;
 import repository.DomicilioRepository;
 import repository.PersonaRepository;
 import repository.TurnoRepository;
@@ -12,6 +14,7 @@ import java.util.List;
 public class main {
     public static void main(String[]args){
         EntityManager em = JPAUtil.getEntityManager();
+/*
         PersonaRepository pr = new PersonaRepository();
         DomicilioRepository dr = new DomicilioRepository();
         TurnoRepository tr = new TurnoRepository();
@@ -45,5 +48,16 @@ public class main {
 
         pr.eliminar(4);
         System.out.println(pr.buscarPorId(5));
+
+        pr.asignarTurno(tr.find(1),pr.find(2));
+        pr.asignarTurno(tr.find(1),pr.find(3));
+        pr.asignarTurno(tr.find(1),pr.find(6));
+
+        ArrayList<PersonaDTO> perDTO = pr.obtenerPersonasPorTurno(1);
+
+        for(PersonaDTO p : perDTO){
+            System.out.println(p);
+        }
+        */
     }
 }
